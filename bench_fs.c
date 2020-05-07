@@ -76,18 +76,22 @@ delete_files(char *path,int nf_num)
     if(!nf_num)
         return -1;
     int i = 0;
-    int cnt_files = nf_num+2;
     char **files = malloc(sizeof(char*)*nf_num);
     DIR* dir = opendir(path);
+    if(dir == NULL)
+        perror("Error oprn dir");
     struct dirent* entry;
     char buffer[100];
-    while((entry = readdir(dir)) && cnt_files--) {
+    while((entry = readdir(dir))) {
         if(strcmp(entry->d_name,".") == 0 || strcmp(entry->d_name,"..") == 0 || strcmp(entry->d_name,"lost+found") == 0)
             continue;
         char* tmp = malloc(strlen(entry->d_name)+1);
+        if (tmp == NULL)
+            perror("Malloc tmp filename");
         strcpy(tmp,entry->d_name);
         files[i++] = tmp;
     }
+    closedir(dir);
     qsort(files,nf_num,sizeof(char*),funccmp);
     for(i = 0; i < nf_num; i++) {
         char *tmp_file = str_cat(path,files[i]);
