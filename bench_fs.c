@@ -55,7 +55,7 @@ create_rand_files(char *path,int n)
         tmp_name = str_cat(path,rand_name);
         if (i < 10)
             printf("%s\n",tmp_name);
-        int fd = open(tmp_name,O_RDWR|O_CREAT|O_TRUNC,S_IRUSR|S_IWUSR);
+        int fd = open(tmp_name,O_RDWR|O_CREAT|O_TRUNC|O_SYNC,S_IRUSR|S_IWUSR);
         write(fd,"a",1);
         free(tmp_name);
     }
