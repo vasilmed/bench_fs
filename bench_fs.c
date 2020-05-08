@@ -57,6 +57,7 @@ create_rand_files(char *path,int n)
             printf("%s\n",tmp_name);
         int fd = open(tmp_name,O_RDWR|O_CREAT|O_TRUNC|O_SYNC,S_IRUSR|S_IWUSR);
         write(fd,"a",1);
+        close(fd);
         free(tmp_name);
     }
     
